@@ -16,13 +16,8 @@ serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
         # # # . .
         # # # . .
         `)
-    EmpangeneDaten = serial.readLine()
-    if (EmpangeneDaten == "FWD_1") {
-        radio.sendNumber(50)
-    }
-    if (EmpangeneDaten == "RWD_1") {
-        radio.sendNumber(10)
-    }
+    EmpangeneDaten = serial.readLine().split(",")
+    radio.sendString("" + (EmpangeneDaten[0]))
 })
 input.onButtonPressed(Button.B, function () {
     basic.showLeds(`
@@ -34,10 +29,17 @@ input.onButtonPressed(Button.B, function () {
         `)
     radio.sendNumber(10)
 })
-let EmpangeneDaten = ""
+let EmpangeneDaten: string[] = []
 radio.setGroup(1)
 serial.redirect(
 SerialPin.P0,
 SerialPin.P14,
 BaudRate.BaudRate115200
 )
+basic.showLeds(`
+    # # # . .
+    # # # # #
+    # # # . .
+    # # # . #
+    # # # . .
+    `)
